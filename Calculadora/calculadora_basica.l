@@ -12,7 +12,7 @@ digito  [0-9]
 %%
 
 [ \t]       ; // ignora espaços em branco
-{digito}+   {yylval.val_inteiro = atoi(yytext); return T_INTEIRO;}
+{digito}+   {yylval.val_inteiro = atoi(yytext); return INTEIRO;}
 \n          {return NOVA_LINHA;}
 
 "+"         {return SOMA;}

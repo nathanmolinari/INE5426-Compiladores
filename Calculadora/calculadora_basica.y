@@ -17,8 +17,8 @@
 }
 
 //token (Terminal)
-%token<val_inteiro> T_INTEIRO
-%token<val_racional> T_RACIONAL
+%token<val_inteiro> INTEIRO
+%token<val_racional> RACIONAL
 
 %token SOMA SUBTRACAO MULTIPLICACAO DIVISAO
 %token EXPONENCIACAO
@@ -46,38 +46,37 @@ calculo :
 ;
 
 linha   : NOVA_LINHA
-        | inteiro 								{ printf("\tResultado = %i \n", $1); }
-				| racional 								{ printf("\tResultado = %i / %i \n", $1[0], $1[1]); }
-        | SAIR 										{ printf("falow\n"); exit(0); }
+		| inteiro 								{ printf("\tResultado = %i \n", $1); }
+		| racional 								{ printf("\tResultado = %i / %i \n", $1[0], $1[1]); }
+		| SAIR 									{ printf("falow\n"); exit(0); }
 ;
 
-inteiro : T_INTEIRO             									{ $$ = $1; }
-        | inteiro SOMA inteiro  									{ $$ = $1 + $3; }
-				| inteiro SUBTRACAO inteiro  							{ $$ = $1 - $3; }
-        | inteiro MULTIPLICACAO inteiro 					{ $$ = $1 * $3; }
-				| inteiro EXPONENCIACAO inteiro						{ $$ = pow($1, $3); }
-				| SUBTRACAO inteiro %prec NEGATIVO				{ $$ = -$2; }
-				| PARENTESES inteiro PARENTESES						{ $$ = $2; }
-
+inteiro : T_INTEIRO             					{ $$ = $1; }
+		| inteiro SOMA inteiro  					{ $$ = $1 + $3; }
+		| inteiro SUBTRACAO inteiro  				{ $$ = $1 - $3; }
+		| inteiro MULTIPLICACAO inteiro 			{ $$ = $1 * $3; }
+		| inteiro EXPONENCIACAO inteiro				{ $$ = pow($1, $3); }
+		| SUBTRACAO inteiro %prec NEGATIVO			{ $$ = -$2; }
+		| PARENTESES inteiro PARENTESES				{ $$ = $2; }
 ;
 
-racional 	: inteiro FRACAO inteiro								{ $$[0] = $1; $$[1] = $3; if($3 == 0){ printf("ERRO: divisão por zero\n"); exit(1);}; simplificarFracao(&$$[0]);}
-//				| inteiro FRACAO SUBTRACAO inteiro			{ $$[0] = -$1; $$[1] = $4; }
+racional : inteiro FRACAO inteiro					{ $$[0] = $1; $$[1] = $3; if($3 == 0){ printf("ERRO: divisão por zero\n"); exit(1);}; simplificarFracao(&$$[0]);}
+		| inteiro FRACAO SUBTRACAO inteiro			{ $$[0] = -$1; $$[1] = $4; }
 
-					| racional SOMA racional								{ $$[0] = $1[0] * $3[1] + $1[1] * $3[0]; $$[1] = $1[1] * $3[1];}
-					| racional SUBTRACAO racional								{ $$[0] = $1[0] * $3[1] - $1[1] * $3[0]; $$[1] = $1[1] * $3[1];}
+		| racional SOMA racional					{ $$[0] = $1[0] * $3[1] + $1[1] * $3[0]; $$[1] = $1[1] * $3[1];}
+		| racional SUBTRACAO racional				{ $$[0] = $1[0] * $3[1] - $1[1] * $3[0]; $$[1] = $1[1] * $3[1];}
 
-					| racional MULTIPLICACAO racional				{ $$[0] = $1[0] * $3[0]; $$[1] = $1[1] * $3[1]; }
-					| racional DIVISAO racional							{ $$[0] = $1[0] * $3[1]; $$[1] = $1[1] * $3[0]; }
+		| racional MULTIPLICACAO racional			{ $$[0] = $1[0] * $3[0]; $$[1] = $1[1] * $3[1]; }
+		| racional DIVISAO racional					{ $$[0] = $1[0] * $3[1]; $$[1] = $1[1] * $3[0]; }
 
-					| racional EXPONENCIACAO inteiro				{ $$[0] = pow($1[0], $3); $$[1] = pow($1[1], $3);}
+		| racional EXPONENCIACAO inteiro			{ $$[0] = pow($1[0], $3); $$[1] = pow($1[1], $3);}
 
- 					| PARENTESES racional PARENTESES 		{ $$[0] = $2[0]; $$[1] = $2[1]; }
+ 		| PARENTESES racional PARENTESES 			{ $$[0] = $2[0]; $$[1] = $2[1]; }
 
-					//					| racional SOMA inteiro									{ $$[0] = $1[0] + $1[1] * $3; $$[1] = $1[1];}
-					//					| inteiro DIVISAO inteiro								{ $$[0] = $1; $$[1] = $3; }
-					//					| racional DIVISAO inteiro							{ $$[0] = $1[0]; $$[1] = $1[1] * $3;}
-					//					| inteiro DIVISAO racional							{ $$[0] = $1 * $3[1]; $$[1] = $3[0];}
+//					| racional SOMA inteiro									{ $$[0] = $1[0] + $1[1] * $3; $$[1] = $1[1];}
+//					| inteiro DIVISAO inteiro								{ $$[0] = $1; $$[1] = $3; }
+//					| racional DIVISAO inteiro							{ $$[0] = $1[0]; $$[1] = $1[1] * $3;}
+//					| inteiro DIVISAO racional							{ $$[0] = $1 * $3[1]; $$[1] = $3[0];}
 ;
 
 %% //Código
