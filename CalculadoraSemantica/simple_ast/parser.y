@@ -19,24 +19,26 @@ bool debug = true;
     AST::Block *block;
 }
 
-/* token defines our terminal symbols (tokens).
- */
-%token <integer> T_INT
-%token T_PLUS T_MULT T_NL
+// token defines our terminal symbols (tokens).
+
 %token DEBUG
+%token NOVA_LINHA
+
+%token <integer> INTEIRO
+%token SOMA MULTIPLICACAO
 
 /* type defines the type of our nonterminal symbols.
  * Types should match the names used in the union.
- * Example: %type<node> expr
+ * Example: %type<node> inteiro
  */
-%type <node> expr line
-%type <block> lines program
+%type <node> inteiro linha
+%type <block> linhas program
 
 /* Operator precedence for mathematical operators
  * The latest it is listed, the highest the precedence
  */
-%left T_PLUS
-%left T_MULT
+%left SOMA
+%left MULTIPLICACAO
 %nonassoc errord
 
 /* Starting rule
@@ -45,28 +47,28 @@ bool debug = true;
 
 %%
 
-program : lines { programRoot = $1; }
+program : linhas { programRoot = $1; }
         ;
 
 
-lines   : line { $$ = new AST::Block(); $$->lines.push_back($1); }
-        | lines line { if($2 != NULL) $1->lines.push_back($2); }
+linhas  : linha { $$ = new AST::Block(); $$->linhas.push_back($1); }
+        | linhas linha { if($2 != NULL) $1->linhas.push_back($2); }
         ;
 
-line    : T_NL { $$ = NULL; } /*nothing here to be used */
-        | expr T_NL /*$$ = $1 when nothing is said*/
+linha    : NOVA_LINHA { $$ = NULL; } /*nothing here to be used */
+        | inteiro NOVA_LINHA /*$$ = $1 when nothing is said*/
         ;
 
-expr    : T_INT { $$ = new AST::Integer($1); }
-        | expr T_PLUS expr {
+inteiro : INTEIRO { $$ = new AST::Integer($1); }
+        | inteiro SOMA inteiro {
             $$ = new AST::BinOp($1,AST::plus,$3);
             if(debug) printf("        SOMA identificada\n") ;
           }
-        | expr T_MULT expr {
+        | inteiro MULTIPLICACAO inteiro {
             $$ = new AST::BinOp($1,AST::mult, $3);
             if(debug) printf("        MULTILICAÇÃO identificada\n") ;
           }
-        | expr error { yyerrok; $$ = $1; } /*just a point for error recovery*/
+        | inteiro error { yyerrok; $$ = $1; } /*just a point for error recovery*/
         ;
 
 %%

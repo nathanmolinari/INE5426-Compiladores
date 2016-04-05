@@ -8,16 +8,20 @@ void yyerror(const char* s, ...);
 
 %option noyywrap nodefault yylineno
 
-digs [0-9]+
+digito [0-9]+
 
 %%
 
 "debug"             {return DEBUG;}
+
 [ \t]               ; //ignores spaces
-{digs}              {yylval.integer = std::atoi(yytext); return T_INT;}
-"+"                 {return T_PLUS;}
-"*"                 {return T_MULT;}
-\n                  {return T_NL;}
+\n                  {return NOVA_LINHA;}
+
+{digito}            {yylval.integer = std::atoi(yytext); return INTEIRO;}
+
+"+"                 {return SOMA;}
+"*"                 {return MULTIPLICACAO;}
+
 .                   {yyerror("Unknown token! %c\n", *yytext);} /*complains about every unknown character*/
 
 %%
