@@ -24,6 +24,7 @@ string [a-zA-Z]+
 
 "def"               {return DEFINICAO;}
 "="                 {return ATRIBUICAO;}
+","                 {return VIRGULA;}
 
 "+"                 {return SOMA;}
 "*"                 {return MULTIPLICACAO;}

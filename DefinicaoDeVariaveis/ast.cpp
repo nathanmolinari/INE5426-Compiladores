@@ -4,24 +4,29 @@ using namespace AST;
 
 /* Print methods */
 void Integer::printTree(){
-    std::cout << value;
+    cout << value;
+    return;
+}
+
+void Identificador::printTree(){
+    cout << identificador;
     return;
 }
 
 void BinOp::printTree(){
     left->printTree();
     switch(op){
-        case plus: std::cout << " + "; break;
-        case mult: std::cout << " * "; break;
+        case plus:          cout << " + "; break;
+        case mult:          cout << " * "; break;
     }
     right->printTree();
     return;
 }
 
 void Block::printTree(){
-    for (Node* line: linhas) {
-        line->printTree();
-        std::cout << std::endl;
+    for (Node* linha: linhas) {
+        linha->printTree();
+        cout << endl;
     }
 }
 
@@ -30,22 +35,26 @@ int Integer::computeTree(){
     return value;
 }
 
+int Identificador::computeTree(){
+    return tabelaDeVariaveis[identificador];
+}
+
 int BinOp::computeTree(){
     int value, lvalue, rvalue;
     lvalue = left->computeTree();
     rvalue = right->computeTree();
     switch(op){
-         case plus: value = lvalue + rvalue; break;
-         case mult: value = lvalue * rvalue; break;
+         case plus:         value = lvalue + rvalue; break;
+         case mult:         value = lvalue * rvalue; break;
     }
     return value;
 }
 
 int Block::computeTree(){
     int value;
-    for (Node* line: linhas) {
-        value = line->computeTree();
-         std::cout << "Computed " << value << std::endl;
+    for (Node* linha: linhas) {
+        value = linha->computeTree();
+         cout << "Computed " << value << endl;
     }
     return 0;
 }

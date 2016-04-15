@@ -47,13 +47,16 @@ extern int yydebug;
   {
     DEBUG = 258,
     NOVA_LINHA = 259,
-    INTEIRO = 260,
-    STRING = 261,
-    SOMA = 262,
-    MULTIPLICACAO = 263,
-    DEFINICAO = 264,
-    ATRIBUICAO = 265,
-    errord = 266
+    VIRGULA = 260,
+    DEU = 261,
+    BOA = 262,
+    INTEIRO = 263,
+    STRING = 264,
+    DEFINICAO = 265,
+    ATRIBUICAO = 266,
+    SOMA = 267,
+    MULTIPLICACAO = 268,
+    errord = 269
   };
 #endif
 
@@ -62,7 +65,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 21 "parser.y" /* yacc.c:1909  */
+#line 22 "parser.y" /* yacc.c:1909  */
 
     int integer;
     std::string *string;
@@ -70,7 +73,7 @@ union YYSTYPE
     AST::Node *node;
     AST::Block *block;
 
-#line 74 "parser.h" /* yacc.c:1909  */
+#line 77 "parser.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

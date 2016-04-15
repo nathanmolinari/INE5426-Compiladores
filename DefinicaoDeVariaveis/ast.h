@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
+
+using namespace std;
 
 namespace AST {
 
@@ -9,6 +12,7 @@ namespace AST {
 enum Operation { plus, mult };
 
 class Node;
+extern map<string, int> tabelaDeVariaveis;
 
 typedef std::vector<Node*> NodeList; //List of ASTs
 
@@ -23,6 +27,15 @@ class Integer : public Node {
     public:
         int value;
         Integer(int value) : value(value) {  }
+        void printTree();
+        int computeTree();
+};
+
+class Identificador : public Node {
+    public:
+        string identificador;
+        Identificador(std::string identificador) :
+            identificador(identificador) { }
         void printTree();
         int computeTree();
 };
