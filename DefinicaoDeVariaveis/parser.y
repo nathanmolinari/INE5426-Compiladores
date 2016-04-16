@@ -1,17 +1,18 @@
 %{
 #include "ast.h"
 
-AST::Block *programRoot; /* the root node of our program AST:: */
-extern int yylex();
-extern void yyerror(const char* s, ...);
-
 #include <stdio.h>
 #include <stdlib.h>
 
 using namespace AST;
 using namespace std;
 
+extern int yylex();
+extern void yyerror(const char* s, ...);
+
 #define VARIAVEL_INDEFINIDA -666;
+
+AST::Block *raizDoPrograma; /* the root node of our program AST:: */
 bool debug = true;
 
 %}
@@ -29,22 +30,32 @@ bool debug = true;
 
 // token defines our terminal symbols (tokens).
 
-%token DEBUG
 %token NOVA_LINHA
-%token VIRGULA
-DEU BOA
-%token <integer> INTEIRO
-%token <string> STRING
 
 %token DEFINICAO
 %token ATRIBUICAO
 
-%token SOMA MULTIPLICACAO
+%token SOMA
+%token SUBTRACAO
+%token MULTIPLICACAO
+%token DIVISAO
+
+%token VIRGULA
+
+%token ABRE_PARENTESES FECHA_PARENTESES
+%token ABRE_CHAVES FECHA_CHAVES
+
+%token <integer> INTEIRO
+%token <string> STRING
 
 /* type defines the type of our nonterminal symbols.
  * Types should match the names used in the union.
  * Example: %type<node> inteiro
  */
+
+%type <block> program
+%type <block> bloco
+%type <node> linha
 
 %type <node> definicao
 %type <node> definicao_multipla
@@ -52,16 +63,17 @@ DEU BOA
 
 %type <node> inteiro
 
-%type <node> linha
-%type <block> linhas program
 
 /* Operator precedence for mathematical operators
  * The latest it is listed, the highest the precedence
  */
 
-%left DEFINICAO ATRIBUICAO
+%left ATRIBUICAO
+%left DEFINICAO
 %left SOMA
+%left SUBTRACAO
 %left MULTIPLICACAO
+%left DIVISAO
 %nonassoc errord
 
 /* Starting rule*/
@@ -70,12 +82,12 @@ DEU BOA
 
 %%
 
-program     : linhas { programRoot = $1; }
+program     : bloco { raizDoPrograma = $1; }
             ;
 
 
-linhas      : linha { $$ = new Block(); $$->linhas.push_back($1);}
-            | linhas linha { if($2 != NULL) $1->linhas.push_back($2); }
+bloco      : linha { $$ = new Block(); $$->linhas.push_back($1);}
+            | bloco linha { if($2 != NULL) $1->linhas.push_back($2); }
             ;
 
 linha       : NOVA_LINHA { $$ = NULL; } /*nothing here to be used */
@@ -112,7 +124,6 @@ atribuicao  : STRING ATRIBUICAO inteiro {
             | definicao ATRIBUICAO inteiro {
 
             }
-
 
 inteiro     : INTEIRO { $$ = new Integer($1); }
             | inteiro SOMA inteiro {
