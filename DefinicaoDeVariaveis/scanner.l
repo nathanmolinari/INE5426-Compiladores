@@ -31,6 +31,7 @@ string [a-zA-Z]+
 ":"                 {return DIVISAO;}
 
 ","                 {return VIRGULA;}
+"."                 {return PONTO;}
 
 "("                 {return ABRE_PARENTESES;}
 ")"                 {return FECHA_PARENTESES;}
