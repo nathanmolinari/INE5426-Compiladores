@@ -1,20 +1,19 @@
 %{
-#include "ast.h"
+  #include "ast.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+  #include <stdio.h>
+  #include <stdlib.h>
 
-using namespace AST;
-using namespace std;
+  using namespace AST;
+  using namespace std;
 
-extern int yylex();
-extern void yyerror(const char* s, ...);
+  extern int yylex();
+  extern void yyerror(const char* s, ...);
 
-#define VARIAVEL_INDEFINIDA -666;
+  #define VARIAVEL_INDEFINIDA -666;
 
-AST::Block *raizDoPrograma; /* the root node of our program AST:: */
-bool debug = true;
-
+  AST::Block *raizDoPrograma; /* the root node of our program */
+  bool debug = true;
 %}
 
 /* yylval == %union
@@ -48,12 +47,9 @@ bool debug = true;
 %token <integer> INTEIRO
 %token <string> STRING
 
-/* type defines the type of our nonterminal symbols.
- * Types should match the names used in the union.
- * Example: %type<node> inteiro
- */
+// type defines the type of our nonterminal symbols.
 
-%type <block> program
+%type <block> programa
 %type <block> bloco
 %type <node> linha
 
@@ -76,65 +72,79 @@ bool debug = true;
 %left DIVISAO
 %nonassoc errord
 
-/* Starting rule*/
+/* Gramatica Sintática */
 
 %start program
 
 %%
 
-program     : bloco { raizDoPrograma = $1; }
-            ;
+programa
+    : bloco { raizDoPrograma = $1; }
+;
 
 
-bloco      : linha { $$ = new Block(); $$->linhas.push_back($1);}
-            | bloco linha { if($2 != NULL) $1->linhas.push_back($2); }
-            ;
+bloco
+    : instrucao {
+            $$ = new Block();
+            $$->linhas.push_back($1);
+    }
 
-linha       : NOVA_LINHA { $$ = NULL; } /*nothing here to be used */
-            | inteiro NOVA_LINHA
-            | definicao NOVA_LINHA
-            | definicao_multipla NOVA_LINHA
-            | atribuicao NOVA_LINHA
-            ;
+    | bloco instrucao {
+            if($2 != NULL)
+              $1->linhas.push_back($2);
+     }
+;
 
-definicao   : DEFINICAO STRING {
-                $$ = new Identificador(*$2);
+instrucao
+    : NOVA_LINHA { $$ = NULL; } /*nothing here to be used */
+    | inteiro NOVA_LINHA
+    | definicao NOVA_LINHA
+    | definicao_multipla NOVA_LINHA
+    | atribuicao NOVA_LINHA
+;
 
-                tabelaDeVariaveis[*$2] = VARIAVEL_INDEFINIDA;
-                cout << "DEFINICAO" << endl;
-              }
-            ;
+definicao
+    : DEFINICAO STRING {
+            $$ = new Identificador(*$2);
+            tabelaDeVariaveis[*$2] = VARIAVEL_INDEFINIDA;
+            cout << "DEFINICAO" << endl;
+    }
+;
 
-definicao_multipla  : definicao VIRGULA STRING {
-                      $$ = new Identificador(*$3);
+definicao_multipla
+    : definicao VIRGULA STRING {
+            $$ = new Identificador(*$3);
+            tabelaDeVariaveis[*$3] = VARIAVEL_INDEFINIDA;
+            cout << "DEFINICAO" << endl;
+    }
+;
 
-                      tabelaDeVariaveis[*$3] = VARIAVEL_INDEFINIDA;
-                      cout << "DEFINICAO" << endl;
-                    }
-                    ;
-
-atribuicao  : STRING ATRIBUICAO inteiro {
-                if(tabelaDeVariaveis[*$1]){
-                  tabelaDeVariaveis[*$1] = $3->computeTree();
-                  cout << "ATRIBUICAO" << endl;
-                } else{
-                  cout << "Variável '" << *$1 << "' não definida." << endl;
-                }
-              }
-            | definicao ATRIBUICAO inteiro {
-
+atribuicao
+    : STRING ATRIBUICAO inteiro {
+            if(tabelaDeVariaveis[*$1]){
+              tabelaDeVariaveis[*$1] = $3->computeTree();
+              cout << "ATRIBUICAO" << endl;
+            } else{
+              cout << "Variável '" << *$1 << "' não definida." << endl;
             }
+    }
 
-inteiro     : INTEIRO { $$ = new Integer($1); }
-            | inteiro SOMA inteiro {
-                $$ = new BinOp($1, AST::plus,$3);
-                if(debug) cout << "SOMA" << endl;
-              }
-            | inteiro MULTIPLICACAO inteiro {
-                $$ = new BinOp($1, AST::mult, $3);
-                if(debug) cout << "MULTIPLICACAO" << endl;
-              }
-            | inteiro error { yyerrok; $$ = $1; } /*just a point for error recovery*/
-            ;
+    | definicao ATRIBUICAO inteiro {
+
+    }
+
+inteiro
+    : INTEIRO { $$ = new Integer($1); }
+
+    | inteiro SOMA inteiro {
+            $$ = new BinOp($1, AST::plus,$3);
+            if(debug) cout << "SOMA" << endl;
+    }
+
+    | inteiro MULTIPLICACAO inteiro {
+            $$ = new BinOp($1, AST::mult, $3);
+            if(debug) cout << "MULTIPLICACAO" << endl;
+    }
+;
 
 %%
