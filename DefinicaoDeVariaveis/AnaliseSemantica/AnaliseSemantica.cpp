@@ -4,7 +4,7 @@ using namespace AnaliseSemantica;
 
 /* Print methods */
 void Block::printTree(){
-    for (Node* instrucao: listaDeInstrucoes) {
+    for (Nodo* instrucao: listaDeInstrucoes) {
         instrucao->printTree();
         cout << endl;
     }
@@ -13,7 +13,7 @@ void Block::printTree(){
 /* Compute methods */
 int Block::computeTree(){
     int value;
-    for (Node* instrucao: listaDeInstrucoes) {
+    for (Nodo* instrucao: listaDeInstrucoes) {
         value = instrucao->computeTree();
          cout << "Computed " << value << endl;
     }

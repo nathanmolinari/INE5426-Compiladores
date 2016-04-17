@@ -1,19 +1,19 @@
 %{
-  #include "AnaliseSemantica/AnaliseSemantica.h"
+    #include "AnaliseSemantica/AnaliseSemantica.h"
 
-  #include <stdio.h>
-  #include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-  using namespace AnaliseSemantica;
-  using namespace std;
+    using namespace AnaliseSemantica;
+    using namespace std;
 
-  extern int yylex();
-  extern void yyerror(const char* s, ...);
+    extern int yylex();
+    extern void yyerror(const char* s, ...);
 
-  #define VARIAVEL_INDEFINIDA -666;
+    #define VARIAVEL_INDEFINIDA -666;
 
-  AnaliseSemantica::Block *raizDoPrograma; /* the root node of our program */
-  bool debug = true;
+    AnaliseSemantica::Bloco *raizDoPrograma; /* the root node of our program */
+    bool debug = true;
 %}
 
 /* yylval == %union
@@ -23,8 +23,8 @@
     int integer;
     std::string *string;
 
-    AnaliseSemantica::Node *node;
-    AnaliseSemantica::Block *block;
+    AnaliseSemantica::Nodo *nodo;
+    AnaliseSemantica::Bloco *bloco;
 }
 
 // token defines our terminal symbols (tokens).
@@ -49,15 +49,15 @@
 
 // type defines the type of our nonterminal symbols.
 
-%type <block> programa
-%type <block> bloco
-%type <node> instrucao
+%type <bloco> programa
+%type <bloco> bloco
+%type <nodo> instrucao
 
-%type <node> definicao
-%type <node> definicao_multipla
-%type <node> atribuicao
+%type <nodo> definicao
+%type <nodo> definicao_multipla
+%type <nodo> atribuicao
 
-%type <node> inteiro
+%type <nodo> inteiro
 
 
 /* Operator precedence for mathematical operators
@@ -85,7 +85,7 @@ programa
 
 bloco
     : instrucao {
-            $$ = new Block();
+            $$ = new Bloco();
             $$->listaDeInstrucoes.push_back($1);
     }
 

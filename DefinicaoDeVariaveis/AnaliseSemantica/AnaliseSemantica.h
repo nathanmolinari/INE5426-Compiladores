@@ -8,23 +8,45 @@ using namespace std;
 
 namespace AnaliseSemantica {
 
-enum Operation { plus, mult };
+  enum Operation { plus, mult };
 
-class Node;
+  template <typename T>
+  class Nodo;
 
-class Node {
-    public:
-        virtual ~Node() { }
-        virtual void printTree() { }
-//        virtual int computeTree(){return 0;}
-};
+  template <typename T>
+  class Nodo {
+      public:
+          virtual ~Nodo() { }
+          virtual void printTree() { }
+          virtual T computeTree() { }
+  };
 
-class Block : public Node {
-    public:
-        Block() { }
-        std::vector<Node*> listaDeInstrucoes;
-        void printTree();
-        int computeTree();
-};
+  template <typename T>
+  class Bloco : public Nodo<T> {
+      public:
+          Bloco() { }
+          std::vector<Nodo*> listaDeInstrucoes;
+          void printTree();
+          int computeTree();
+  };
+
+  template <typename T>
+  class Primitivo : public Nodo<T> {
+      protected:
+          T valor;
+          Primitivo(T valor) : valor(valor) { }
+      public:
+          void printTree();
+          int computeTree();
+  };
+
+  template <>
+  class Primitivo<int> : public Nodo<int> {
+          int valor;
+      public:
+          Primitivo(int valor) : valor(valors) { }
+          void printTree();
+          int computeTree();
+  };
 
 }
