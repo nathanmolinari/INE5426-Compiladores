@@ -1,17 +1,16 @@
 %{
-#include "ast.h"
-#include "parser.h"
+  #include "parser.h"
+  #include "AnaliseSemantica/AnaliseSemantica.h"
 
-#include <string>
+  #include <string>
 
-using namespace std;
+  using namespace std;
 
-extern int yylineno;
-void yyerror(const char* s, ...);
-
+  extern int yylineno;
+  void yyerror(const char* s, ...);
 %}
 
-%option noyywrap nodefault yylineno
+%option noyywrap nodefault yylineno // ???
 
 number [0-9]+
 string [a-zA-Z]+

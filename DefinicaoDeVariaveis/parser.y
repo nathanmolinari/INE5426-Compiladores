@@ -1,10 +1,10 @@
 %{
-  #include "ast.h"
+  #include "AnaliseSemantica/AnaliseSemantica.h"
 
   #include <stdio.h>
   #include <stdlib.h>
 
-  using namespace AST;
+  using namespace AnaliseSemantica;
   using namespace std;
 
   extern int yylex();
@@ -12,7 +12,7 @@
 
   #define VARIAVEL_INDEFINIDA -666;
 
-  AST::Block *raizDoPrograma; /* the root node of our program */
+  AnaliseSemantica::Block *raizDoPrograma; /* the root node of our program */
   bool debug = true;
 %}
 
@@ -23,8 +23,8 @@
     int integer;
     std::string *string;
 
-    AST::Node *node;
-    AST::Block *block;
+    AnaliseSemantica::Node *node;
+    AnaliseSemantica::Block *block;
 }
 
 // token defines our terminal symbols (tokens).
@@ -51,7 +51,7 @@
 
 %type <block> programa
 %type <block> bloco
-%type <node> linha
+%type <node> instrucao
 
 %type <node> definicao
 %type <node> definicao_multipla
@@ -86,12 +86,12 @@ programa
 bloco
     : instrucao {
             $$ = new Block();
-            $$->linhas.push_back($1);
+            $$->listaDeInstrucoes.push_back($1);
     }
 
     | bloco instrucao {
             if($2 != NULL)
-              $1->linhas.push_back($2);
+              $1->listaDeInstrucoes.push_back($2);
      }
 ;
 
@@ -137,12 +137,12 @@ inteiro
     : INTEIRO { $$ = new Integer($1); }
 
     | inteiro SOMA inteiro {
-            $$ = new BinOp($1, AST::plus,$3);
+            $$ = new BinOp($1, AnaliseSemantica::plus,$3);
             if(debug) cout << "SOMA" << endl;
     }
 
     | inteiro MULTIPLICACAO inteiro {
-            $$ = new BinOp($1, AST::mult, $3);
+            $$ = new BinOp($1, AnaliseSemantica::mult, $3);
             if(debug) cout << "MULTIPLICACAO" << endl;
     }
 ;
