@@ -40,6 +40,7 @@
 %token DIVISAO
 
 %token VIRGULA
+%token PONTO
 
 %token ABRE_PARENTESES FECHA_PARENTESES
 %token ABRE_CHAVES FECHA_CHAVES
@@ -132,19 +133,35 @@ atribuicao
     | definicao ATRIBUICAO inteiro {
 
     }
+;
 
 inteiro
     : INTEIRO { $$ = new Integer($1); }
 
     | inteiro SOMA inteiro {
-            $$ = new BinOp($1, AnaliseSemantica::plus,$3);
+            $$ = new Soma_int_int($1, $3);
             if(debug) cout << "SOMA" << endl;
     }
 
     | inteiro MULTIPLICACAO inteiro {
-            $$ = new BinOp($1, AnaliseSemantica::mult, $3);
+            $$ = new Multiplicacao_int_int($1, $3);
             if(debug) cout << "MULTIPLICACAO" << endl;
     }
 ;
 
+/*
+racional
+    : RACIONAL { $$ = new Racional($1); }
+
+    | racional SOMA inteiro {
+            $$ = new Soma_double_int($1, $3);
+            if(debug) cout << "SOMA" << endl;
+    }
+
+    | racional SOMA racional {
+            $$ = new Soma_double_double($1, $3);
+            if(debug) cout << "SOMA" << endl;
+    }
+;
+*/
 %%
