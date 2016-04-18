@@ -2,20 +2,16 @@
 
 using namespace AnaliseSemantica;
 
-/* Print methods */
-void Block::printTree(){
+void Bloco::print(){
     for (Nodo* instrucao: listaDeInstrucoes) {
-        instrucao->printTree();
+        instrucao->print();
         cout << endl;
     }
 }
 
-/* Compute methods */
-int Block::computeTree(){
-    int value;
+int Bloco::executar(){
     for (Nodo* instrucao: listaDeInstrucoes) {
-        value = instrucao->computeTree();
-         cout << "Computed " << value << endl;
+        instrucao->executar();
     }
     return 0;
 }

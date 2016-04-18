@@ -1,5 +1,3 @@
-#pragma once
-
 #include "AnaliseSemantica.h"
 
 #include <iostream>
@@ -15,7 +13,7 @@ namespace AnaliseSemantica {
             Primitivo(T valor) : valor(valor) { }
         public:
             void print(){
-                cout << valor << endl;
+                cout << valor;
             };
             T executar(){
                 return valor;

@@ -11,14 +11,12 @@ using namespace std;
 
 namespace AnaliseSemantica {
 
-    enum Operation { plus, mult };
-
     template <typename T>
     class Nodo {
         public:
             virtual ~Nodo() { }
-            virtual void printTree() { }
-            virtual T computeTree() { }
+            virtual void print() { }
+            virtual T executar() { }
     };
 
     template <typename T>
@@ -26,8 +24,8 @@ namespace AnaliseSemantica {
         public:
             Bloco() { }
             std::vector<Nodo*> listaDeInstrucoes;
-            void printTree();
-            int computeTree();
+            void print();
+            int executar();
     };
 }
 
