@@ -10,7 +10,7 @@
     void yyerror(const char* s, ...);
 %}
 
-%option noyywrap nodefault yylineno // ???
+%option noyywrap nodefault yylineno
 
 number [0-9]+
 string [a-zA-Z]+

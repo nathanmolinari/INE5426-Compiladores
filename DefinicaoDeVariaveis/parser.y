@@ -1,5 +1,6 @@
 %{
-    #include "AnaliseSemantica/AnaliseSemantica.h"
+    #include "AnaliseSemantica/Primitivo.h"
+    #include "AnaliseSemantica/Operacao.h"
 
     #include <stdio.h>
     #include <stdlib.h>
@@ -10,8 +11,6 @@
     extern int yylex();
     extern void yyerror(const char* s, ...);
 
-    #define VARIAVEL_INDEFINIDA -666;
-
     AnaliseSemantica::Bloco *raizDoPrograma; /* the root node of our program */
     bool debug = true;
 %}
@@ -21,10 +20,10 @@
  */
 %union {
     int integer;
-    std::string *string;
+    std::string* string;
 
-    AnaliseSemantica::Nodo *nodo;
-    AnaliseSemantica::Bloco *bloco;
+    AnaliseSemantica::Nodo* nodo;
+    AnaliseSemantica::Bloco* bloco;
 }
 
 // token defines our terminal symbols (tokens).
@@ -50,7 +49,7 @@
 
 // type defines the type of our nonterminal symbols.
 
-%type <bloco> programa
+%type <bloco> program
 %type <bloco> bloco
 %type <nodo> instrucao
 
@@ -79,7 +78,7 @@
 
 %%
 
-programa
+program
     : bloco { raizDoPrograma = $1; }
 ;
 
@@ -99,11 +98,12 @@ bloco
 instrucao
     : NOVA_LINHA { $$ = NULL; } /*nothing here to be used */
     | inteiro NOVA_LINHA
-    | definicao NOVA_LINHA
-    | definicao_multipla NOVA_LINHA
-    | atribuicao NOVA_LINHA
+//    | definicao NOVA_LINHA
+//    | definicao_multipla NOVA_LINHA
+//    | atribuicao NOVA_LINHA
 ;
 
+/*
 definicao
     : DEFINICAO STRING {
             $$ = new Identificador(*$2);
@@ -134,9 +134,10 @@ atribuicao
 
     }
 ;
+*/
 
 inteiro
-    : INTEIRO { $$ = new Integer($1); }
+    : INTEIRO { $$ = new Inteiro($1); }
 
     | inteiro SOMA inteiro {
             $$ = new Soma_int_int($1, $3);

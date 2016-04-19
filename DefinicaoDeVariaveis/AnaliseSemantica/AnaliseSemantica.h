@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef __ANALISESEMANTICA_H_INCLUDED__
-#define __ANALISESEMANTICA_H_INCLUDED__
-
 #include <iostream>
 #include <vector>
 #include <map> //usar
@@ -28,5 +25,3 @@ namespace AnaliseSemantica {
             int executar();
     };
 }
-
-#endif

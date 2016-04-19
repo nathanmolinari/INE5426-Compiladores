@@ -1,13 +1,14 @@
 #include <iostream>
-#include "ast.h"
+#include "AnaliseSemantica/AnaliseSemantica.h"
 
-extern AST::Block* programRoot; //set on Bison file
+extern AnaliseSemantica::Bloco* raizDoPrograma; //set on Bison file
 extern int yyparse();
 
 int main(int argc, char **argv)
 {
     yyparse();                  //parses whole data
-    programRoot->printTree();   //prints the ASTs
-    programRoot->computeTree(); //computes the ASTs
+    raizDoPrograma->print();
+    raizDoPrograma->executar();
+
     return 0;
 }
