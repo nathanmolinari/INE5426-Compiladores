@@ -14,7 +14,7 @@ namespace AnaliseSemantica {
         Nodo<bool>*,
         Nodo<char>* Nodo<string>*
         Nodo<void>*
-    > Fundamental;
+    > TipoFundamental;
 
     template <typename T>
     class Nodo {
@@ -26,7 +26,7 @@ namespace AnaliseSemantica {
 
     class Bloco : public Nodo<void> {
         public:
-            vector<Fundamental> listaDeInstrucoes;
+            vector<TipoFundamental> listaDeInstrucoes;
 
             Bloco() { }
             void print();

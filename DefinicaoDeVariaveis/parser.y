@@ -11,7 +11,7 @@
     extern int yylex();
     extern void yyerror(const char* s, ...);
 
-    AnaliseSemantica::Bloco *raizDoPrograma; /* the root node of our program */
+    Bloco *raizDoPrograma; /* the root node of our program */
     bool debug = true;
 %}
 
@@ -22,8 +22,8 @@
     int integer;
     std::string* string;
 
-    AnaliseSemantica::Nodo* nodo;
-    AnaliseSemantica::Bloco* bloco;
+    TipoFundamental nodo;
+    Bloco* bloco;
 }
 
 // token defines our terminal symbols (tokens).
@@ -53,9 +53,9 @@
 %type <bloco> bloco
 %type <nodo> instrucao
 
-%type <nodo> definicao
-%type <nodo> definicao_multipla
-%type <nodo> atribuicao
+//%type <nodo> definicao
+//%type <nodo> definicao_multipla
+//%type <nodo> atribuicao
 
 %type <nodo> inteiro
 
@@ -91,7 +91,7 @@ bloco
 
     | bloco instrucao {
             if($2 != NULL)
-              $1->listaDeInstrucoes.push_back($2);
+                $1->listaDeInstrucoes.push_back($2);
      }
 ;
 
