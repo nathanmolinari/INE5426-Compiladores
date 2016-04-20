@@ -8,3 +8,8 @@
 
 **vector<T>**
 * [Doc](http://www.cplusplus.com/reference/vector/vector/vector/)
+
+
+
+#### Void template specialization
+* [Exemplo](cpp.sh/7e4k)

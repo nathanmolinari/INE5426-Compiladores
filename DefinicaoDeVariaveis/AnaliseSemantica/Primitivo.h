@@ -44,4 +44,20 @@ namespace AnaliseSemantica {
         public:
             Sentenca(string valor) : Primitivo(valor) { }
     };
+
+    template<>
+    class Primitivo<void> : Nodo<void>{
+        protected:
+            Primitivo() { };
+        public:
+            void print(){
+                cout << '@';
+            }
+            void executar(){ }
+    };
+
+    class Vazio : public Primitivo<void>{
+        public:
+            Vazio() : Primitivo<void>() { }
+    };
 }

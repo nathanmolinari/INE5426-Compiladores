@@ -2,11 +2,19 @@
 
 #include <iostream>
 #include <vector>
-#include <map> //usar
+#include <boost/variant.hpp>
 
+using namespace boost;
 using namespace std;
 
 namespace AnaliseSemantica {
+
+    typedef variant<
+        Nodo<int>*, Nodo<double>*,
+        Nodo<bool>*,
+        Nodo<char>* Nodo<string>*
+        Nodo<void>*
+    > Fundamental;
 
     template <typename T>
     class Nodo {
@@ -16,12 +24,12 @@ namespace AnaliseSemantica {
             virtual T executar() { }
     };
 
-    template <typename T>
-    class Bloco : public Nodo<T> {
+    class Bloco : public Nodo<void> {
         public:
+            vector<Fundamental> listaDeInstrucoes;
+
             Bloco() { }
-            std::vector<Nodo*> listaDeInstrucoes;
             void print();
-            int executar();
+            void executar();
     };
 }
