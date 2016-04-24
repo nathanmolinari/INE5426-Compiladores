@@ -32,19 +32,25 @@ namespace AnaliseSemantica {
         class Soma_int_int : public Soma<int, int> {
             public:
                 Soma_int_int(Nodo<int>* left, Nodo<int>* right) : Soma(left, right) { }
-                int executar();
+                double executar(){
+                    return left->valor + right->valor;
+                };
         };
 
         class Soma_double_int : public Soma<double, int> {
             public:
                 Soma_double_int(Nodo<double>* left, Nodo<int>* right) : Soma(left, right) { }
-                double executar();
+                double executar(){
+                    return left->valor + right->valor;
+                };
         };
 
         class Soma_double_double : public Soma<double, double> {
             public:
                 Soma_double_double(Nodo<double>* left, Nodo<double>* right) : Soma(left, right) { }
-                double executar();
+                double executar(){
+                    return left->valor + right->valor;
+                };
         };
 
     template <typename L, typename R>
@@ -56,19 +62,25 @@ namespace AnaliseSemantica {
         class Multiplicacao_int_int : public Multiplicacao<int, int> {
             public:
                 Multiplicacao_int_int(Nodo<int>* left, Nodo<int>* right) : Multiplicacao(left, right) { }
-                int executar();
+                int executar(){
+                    return left->valor * right->valor;
+                };
         };
 
         class Multiplicacao_double_int : public Multiplicacao<double, int> {
             public:
                 Multiplicacao_double_int(Nodo<double>* left, Nodo<int>* right) : Multiplicacao(left, right) { }
-                double executar();
+                double executar(){
+                    return left->valor * right->valor;
+                };
         };
 
         class Multiplicacao_double_double : public Multiplicacao<double, double> {
             public:
                 Multiplicacao_double_double(Nodo<double>* left, Nodo<double>* right) : Multiplicacao(left, right) { }
-                double executar();
+                double executar(){
+                    return left->valor * right->valor;
+                };
         };
 
 

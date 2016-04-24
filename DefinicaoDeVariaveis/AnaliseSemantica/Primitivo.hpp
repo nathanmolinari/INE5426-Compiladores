@@ -22,6 +22,17 @@ namespace AnaliseSemantica {
             }
     };
 
+    template<>
+    class Primitivo<void> : Nodo<void>{
+        protected:
+            Primitivo() { };
+        public:
+            void print(){
+                cout << '@';
+            }
+            void executar(){ }
+    };
+
     class Inteiro : public Primitivo<int> {
         public:
             Inteiro(int valor) : Primitivo(valor) { }
@@ -47,19 +58,9 @@ namespace AnaliseSemantica {
             Sentenca(string valor) : Primitivo(valor) { }
     };
 
-    template<>
-    class Primitivo<void> : Nodo<void>{
-        protected:
-            Primitivo() { };
-        public:
-            void print(){
-                cout << '@';
-            }
-            void executar(){ }
-    };
-
     class Vazio : public Primitivo<void>{
         public:
             Vazio() : Primitivo<void>() { }
     };
+
 }
