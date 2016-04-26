@@ -1,6 +1,6 @@
 %{
-    #include "AnaliseSemantica/Primitivo.h"
-    #include "AnaliseSemantica/Operacao.h"
+    #include "AnaliseSemantica/Primitivo.hpp"
+    #include "AnaliseSemantica/Operacao.hpp"
 
     #include <stdio.h>
     #include <stdlib.h>

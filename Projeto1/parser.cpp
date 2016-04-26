@@ -64,8 +64,8 @@
 /* Copy the first part of user declarations.  */
 #line 1 "parser.y" /* yacc.c:339  */
 
-    #include "AnaliseSemantica/Primitivo.h"
-    #include "AnaliseSemantica/Operacao.h"
+    #include "AnaliseSemantica/Primitivo.hpp"
+    #include "AnaliseSemantica/Operacao.hpp"
 
     #include <stdio.h>
     #include <stdlib.h>
@@ -76,7 +76,7 @@
     extern int yylex();
     extern void yyerror(const char* s, ...);
 
-    AnaliseSemantica::Bloco *raizDoPrograma; /* the root node of our program */
+    Bloco *raizDoPrograma; /* the root node of our program */
     bool debug = true;
 
 #line 83 "parser.cpp" /* yacc.c:339  */
@@ -141,10 +141,10 @@ union YYSTYPE
 #line 21 "parser.y" /* yacc.c:355  */
 
     int integer;
-    string* string;
+    std::string* string;
 
-    AnaliseSemantica::Nodo* nodo;
-    AnaliseSemantica::Bloco* bloco;
+    TipoFundamental nodo;
+    Bloco* bloco;
 
 #line 150 "parser.cpp" /* yacc.c:355  */
 };
@@ -1253,7 +1253,7 @@ yyreduce:
 #line 92 "parser.y" /* yacc.c:1646  */
     {
             if((yyvsp[0].nodo) != NULL)
-              (yyvsp[-1].bloco)->listaDeInstrucoes.push_back((yyvsp[0].nodo));
+                (yyvsp[-1].bloco)->listaDeInstrucoes.push_back((yyvsp[0].nodo));
      }
 #line 1259 "parser.cpp" /* yacc.c:1646  */
     break;

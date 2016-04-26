@@ -1,6 +1,6 @@
 %{
     #include "parser.h"
-    #include "AnaliseSemantica/AnaliseSemantica.h"
+    #include "AnaliseSemantica/AnaliseSemantica.hpp"
 
     #include <string>
 

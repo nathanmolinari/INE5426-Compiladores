@@ -1,5 +1,5 @@
 #include <iostream>
-#include "AnaliseSemantica/AnaliseSemantica.h"
+#include "AnaliseSemantica/AnaliseSemantica.hpp"
 
 extern AnaliseSemantica::Bloco* raizDoPrograma; //set on Bison file
 extern int yyparse();

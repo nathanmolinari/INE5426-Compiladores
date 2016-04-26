@@ -494,7 +494,7 @@ char *yytext;
 #line 1 "scanner.l"
 #line 2 "scanner.l"
     #include "parser.h"
-    #include "AnaliseSemantica/AnaliseSemantica.h"
+    #include "AnaliseSemantica/AnaliseSemantica.hpp"
 
     #include <string>
 

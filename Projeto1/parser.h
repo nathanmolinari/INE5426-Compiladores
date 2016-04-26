@@ -72,10 +72,10 @@ union YYSTYPE
 #line 21 "parser.y" /* yacc.c:1909  */
 
     int integer;
-    string* string;
+    std::string* string;
 
-    AnaliseSemantica::Nodo* nodo;
-    AnaliseSemantica::Bloco* bloco;
+    TipoFundamental nodo;
+    Bloco* bloco;
 
 #line 81 "parser.h" /* yacc.c:1909  */
 };

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AnaliseSemantica.h"
+#include "AnaliseSemantica.hpp"
 
 #include <iostream>
 
@@ -32,7 +32,7 @@ namespace AnaliseSemantica {
         class Soma_int_int : public Soma<int, int> {
             public:
                 Soma_int_int(Nodo<int>* left, Nodo<int>* right) : Soma(left, right) { }
-                double executar(){
+                int executar(){
                     return left->valor + right->valor;
                 };
         };
