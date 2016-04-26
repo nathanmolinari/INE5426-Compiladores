@@ -45,18 +45,22 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    DEBUG = 258,
-    NOVA_LINHA = 259,
-    VIRGULA = 260,
-    DEU = 261,
-    BOA = 262,
-    INTEIRO = 263,
-    STRING = 264,
-    DEFINICAO = 265,
-    ATRIBUICAO = 266,
-    SOMA = 267,
-    MULTIPLICACAO = 268,
-    errord = 269
+    NOVA_LINHA = 258,
+    DEFINICAO = 259,
+    ATRIBUICAO = 260,
+    SOMA = 261,
+    SUBTRACAO = 262,
+    MULTIPLICACAO = 263,
+    DIVISAO = 264,
+    VIRGULA = 265,
+    PONTO = 266,
+    ABRE_PARENTESES = 267,
+    FECHA_PARENTESES = 268,
+    ABRE_CHAVES = 269,
+    FECHA_CHAVES = 270,
+    INTEIRO = 271,
+    STRING = 272,
+    errord = 273
   };
 #endif
 
@@ -65,15 +69,15 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 22 "parser.y" /* yacc.c:1909  */
+#line 21 "parser.y" /* yacc.c:1909  */
 
     int integer;
-    std::string *string;
+    std::string* string;
 
-    AST::Node *node;
-    AST::Block *block;
+    TipoFundamental nodo;
+    Bloco* bloco;
 
-#line 77 "parser.h" /* yacc.c:1909  */
+#line 81 "parser.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
